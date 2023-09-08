@@ -12,13 +12,9 @@ spring:
     url: jdbc:mysql://101.43.214.147:3306/workdb?useUnicode=true&characterEncoding=UTF-8&serverTimeZone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: 123456
-#server:
-#  port: 443
-#  ssl:
-#    enabled: true
-#    key-store-password: 13195922677ss
-#    key-store: classpath:lyqcd.xyz.jks
-#    key-store-type: JKS
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
 #condition:
 #  http2https: true
 #http:

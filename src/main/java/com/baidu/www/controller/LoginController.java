@@ -15,9 +15,9 @@ public class LoginController {
         return "login";
     }
     //登录后跳转
-    @GetMapping("/main")
+    @GetMapping("/login3")
     public String main(){
-        return "main";
+        return "login3";
     }
 
     //因为没有连接数据库，所以在这里写一个模拟数据库
