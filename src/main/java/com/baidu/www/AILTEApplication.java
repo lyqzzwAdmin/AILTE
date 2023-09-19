@@ -21,7 +21,7 @@ public class AILTEApplication {
 		ApplicationContext ac=SpringApplication.run(AILTEApplication.class, args);
 	}
 
-	// 如果没有使用默认值80
+	    // 如果没有使用默认值80
 		@Value("${http.port:80}")
 		Integer httpPort;
 

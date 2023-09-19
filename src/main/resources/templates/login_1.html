@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +9,10 @@
         html {
             margin: 0;
         }
-
         canvas {
             display: block;
         }
-
-        .donghua {
+        .donghua{
             font-family: 'Montserrat', sans-serif;
             font-size: 30px;
             position: absolute;
@@ -90,52 +88,11 @@
             text-decoration-line: none;
             color: #abc1ee;
         }
-
-        .donghua.hidden {
-            display: none;
-        }
-
-        .login-plane-human {
-            position: absolute;
-            width: 300px;
-            right: -120px;
-            left: 45%;
-            top: 35%;
-            animation: flyToCenter 5.5s linear forwards;
-        }
-        .canvas-class{
-            position: absolute;
-            left: 0%;
-            top: 0%;
-        }
-
-        @keyframes flyToCenter {
-            0% {
-                transform: scale(1) rotate(-30deg);;
-                opacity: 1;
-            }
-            50% {
-                transform: scale(0.7) rotate(45deg);;
-                opacity: 1;
-            }
-            80% {
-                transform: scale(0.5) rotate(90deg);;
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(0.4) rotate(120deg);;
-                opacity: 0.1;
-            }
-        }
-
-
     </style>
 </head>
 <body>
 <div id="app"></div>
 </body>
-<script src="../static/three.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
 <script type="module">
     import {
         createApp
@@ -158,14 +115,8 @@
         Clock,
         Color,
         MathUtils,
-        Vector3,
+        Vector3
     } from 'https://unpkg.com/three@0.127.0/build/three.module.js';
-
-
-    // import {onMounted} from 'https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.min.js'
-    import {OrbitControls} from 'https://unpkg.com/three@0.124.0/examples/jsm/controls/OrbitControls.js'
-
-
     const niceColors = [
         ["#69d2e7", "#a7dbd8", "#e0e4cc", "#f38630", "#fa6900"],
         ["#fe4365", "#fc9d9a", "#f9cdad", "#c8c8a9", "#83af9b"],
@@ -303,7 +254,7 @@
         <Points ref="points" :position="{ z: -150 }">
           <BufferGeometry :attributes="attributes" />
           <ShaderMaterial :blending="2" :depth-test="false" :uniforms="uniforms" :vertex-shader="vertexShader" :fragment-shader="fragmentShader">
-            <Texture src="../static/sprite.png" uniform="uTexture" />
+            <Texture src="https://assets.codepen.io/33787/sprite.png" uniform="uTexture" />
           </ShaderMaterial>
         </Points>
       </Scene>
@@ -315,12 +266,6 @@
     </Renderer>
 <!--        <a class="donghua" href="#" @click="updateColors" @mouseenter="targetTimeCoef = 100" @mouseleave="targetTimeCoef = 1">开启模型旅程</a>-->
 <!--            <a class="donghua" :class="{ 'hidden': !loginData }"  href="#" @click="click" >开启模型旅程</a>-->
-      <div class="canvas-class">
-         <canvas id="canvas"></canvas>
-      </div>
-      <div class="container">
-        <img class="login-plane-human"  src="../static/images/img.png"  />
-      </div>
           <div class="login-wrapper" >
             <div class="header" >AILTE</div>
             <div class="form-wrapper">
@@ -374,7 +319,7 @@
                 name: 'size',
                 array: sizes,
                 itemSize: 1
-            },]
+            }, ]
             const uniforms = {
                 uTime: {
                     value: 0
@@ -383,8 +328,6 @@
             const clock = new Clock()
             const timeCoef = 1,
                 targetTimeCoef = 1
-
-
             return {
                 POINTS_COUNT,
                 attributes,
@@ -399,8 +342,7 @@
         data() {
             return {
                 zoomStrength: 0,
-                loginData: true,
-                themeColor: "",
+                loginData:true
             }
         },
         mounted() {
@@ -418,8 +360,7 @@
             })
             this.updateColors()
             this.click()
-            this.canvas();
-
+            this.xingqiu();
         },
         methods: {
             updateColors() {
@@ -427,13 +368,13 @@
                 const ip = randInt(0, 99);
                 const palette = niceColors[ip];
                 const color = new Color()
-                let colorf = "";
+                let colorf="";
                 for (let i = 0; i < this.POINTS_COUNT; i++) {
-                    const colorpp = palette[randInt(0, palette.length)]
-                    if (colorf == ""||colorf == undefined) {
-                        colorf = "#fefeeb";
-                    } else {
-                        colorf = colorpp;
+                    const colorpp=palette[randInt(0, palette.length)]
+                    if(colorf==""){
+                        colorf=colorpp;
+                    }else if(colorf=="#fefeeb"){
+                        colorf=colorpp;
                     }
                     color.set(colorpp)
                     color.toArray(colorAttribute.array, i * 3)
@@ -442,14 +383,13 @@
 
                 const themeColor = colorf;
                 var btn = document.querySelector(".btn");
-                console.log("color", themeColor)
-                this.themeColor=themeColor;
-                btn.style.backgroundImage = "linear-gradient(to right, " + themeColor + ", " + themeColor + ")";
+                console.log("color",themeColor)
+                btn.style.backgroundImage = "linear-gradient(to right, "+themeColor+", "+themeColor+")";
             },
-            click() {
+            click(){
                 this.targetTimeCoef = 100
                 setTimeout(() => {
-                    this.loginData = false;
+                    this.loginData=false;
                     var loginWrapper = document.querySelector(".login-wrapper");
                     loginWrapper.style.opacity = "1";
                     loginWrapper.style.transform = "scale(1)";
@@ -457,108 +397,8 @@
 
                 }, 1200)
             },
-            canvas() {
-                const clock2 = new THREE.Clock();
-                // 获取canvas元素
-                const canvas = document.getElementById('canvas');
-                // 创建场景
-                const scene = new THREE.Scene();
-                // 创建相机
-                const camera = new THREE.PerspectiveCamera(75, 1, 1, 100);
-                camera.position.z = 5;
-                // 创建渲染器
-                const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
-                renderer.setSize(1000, 900);
-                // 创建地球的几何体和材质
-                const textureLoader = new THREE.TextureLoader();
-                const geometry = new THREE.SphereGeometry(0.01, 32, 32);
-                let texture=null;
+            xingqiu(){
 
-                var now = new Date();
-                var seconds = now.getSeconds();
-                // 将60秒分为9个段落，每个段落6秒
-                var interval = 6;
-                var segment = Math.floor(seconds / interval);
-
-                // 根据当前段落确定起始时间和结束时间
-                var startTime = segment * interval;
-                var endTime = (segment + 1) * interval;
-                console.log(startTime + ' - ' + endTime);
-                let ff="1";
-                if(startTime == 0){//太阳
-                    texture = textureLoader.load("../static/images/solar/sun.jpg");
-                }else if(startTime >= 6 && startTime < 12){//水星
-                    texture = textureLoader.load("../static/images/solar/neptune.jpg");
-                }else if(startTime >= 12 && startTime < 18){//火星
-                    texture = textureLoader.load("../static/images/solar/mars.jpg");
-                }else if(startTime >= 18 && startTime < 24){//月球
-                    texture = textureLoader.load("../static/images/solar/moon.jpg");
-                }else if(startTime >= 24 && startTime < 30){//金星
-                    texture = textureLoader.load("../static/images/solar/venus.jpg");
-                }else if(startTime >= 30 && startTime < 36){//木星
-                    texture = textureLoader.load("../static/images/solar/jupiter.jpg");
-                }else if(startTime >= 36 && startTime < 42){//地球
-                    ff=2;
-                    texture = textureLoader.load("../static/images/solar/earth.jpg");
-                }else if(startTime >= 42 && startTime < 48){//水星
-                    texture = textureLoader.load("../static/images/solar/mercury.jpg");
-                }else{
-                    ff=2;
-                    texture = textureLoader.load("../static/images/solar/earth-.jpg");
-                }
-                const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
-                // 创建地球的网格
-                const earth = new THREE.Mesh(geometry, material);
-
-                // 加载月球贴图
-                // 创建月球的几何体和材质
-                const moonGeometry = new THREE.SphereGeometry(0.008, 32, 32);
-                const moonTexture = textureLoader.load("../static/images/solar/moon.jpg");
-                const moonMaterial = new THREE.MeshBasicMaterial({ map: moonTexture, transparent: true });
-                // 创建月球的网格
-                const moon = new THREE.Mesh(moonGeometry, moonMaterial);
-
-                // 设置球的初始位置为右下角
-                earth.position.x = 0.5;
-                earth.position.y = -0.2;
-                // 将地球添加到场景中
-                scene.add(earth);
-                if(ff==2){
-                    scene.add(moon);
-                }
-                // 创建动画序列
-                const rotationSpeed = 0.01;
-                const initialDistance = 0.009; // 月球与地球的初始距离
-                const animation = new TWEEN.Tween({ scale: 1, x: 3.5, y: -0.2 })
-                    .to({ scale: 200, x: -8, y: 8 }, 10000)
-                    .easing(TWEEN.Easing.Quadratic.InOut)
-                    .onUpdate((obj) => {
-                         // 地球自转速度
-                        earth.scale.set(obj.scale, obj.scale, obj.scale);
-                        earth.position.x = obj.x;
-                        earth.position.y = obj.y;
-                        if(ff==2){
-                            moon.scale.set(obj.scale * 0.2, obj.scale * 0.2, obj.scale * 0.2);
-                            const distance = initialDistance * obj.scale *2;
-                            const angle = obj.scale * 0.02; // 修改为左右转动
-                            moon.position.x = earth.position.x + distance * Math.cos(angle);
-                            moon.position.y = earth.position.y + distance * Math.sin(angle);
-                        }
-
-                    })
-                    .onComplete(() => {
-                        // 动画结束时移除球
-                        // scene.remove(earth);
-                    });
-                // 渲染场景
-                function animate() {
-                    requestAnimationFrame(animate);
-                    TWEEN.update(); // 更新动画
-                    earth.rotation.y += rotationSpeed;
-                    renderer.render(scene, camera);
-                }
-                animate(); // 启动动画序列
-                animation.start();
             }
         },
     }).mount('#app')
